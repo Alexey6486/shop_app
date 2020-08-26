@@ -1,0 +1,33 @@
+.header{
+    height: 50px;
+    border-bottom: 1px solid #d2cece;
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .link{
+        text-transform: uppercase;
+        font-weight: 300;
+        color: #333333;
+        font-size: 20px;
+        text-decoration: none;
+        margin-right: 10px;
+        transition: all linear 200ms;
+
+        &:hover{
+            color: #b78cff;
+        }
+    }
+
+    .nav{
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+}
