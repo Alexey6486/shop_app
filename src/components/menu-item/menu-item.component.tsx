@@ -1,18 +1,24 @@
 import React from "react";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 import './menu-items.styles.scss';
 
-type PropsType = {
+type WithRouterPropsType = {
+
+}
+type ParentPropsType = {
     title: string
     styleMod: string
     imgUrl: string
+    linkUrl: string
 }
+type PropsType = RouteComponentProps<WithRouterPropsType> & ParentPropsType;
 
-export const MenuItem = (props: PropsType) => {
-
-    const {title, styleMod, imgUrl} = props;
+const MenuItem = (props: PropsType) => {
+    //console.log(props)
+    const {title, styleMod, imgUrl, linkUrl} = props;
 
     return (
-        <div className={`menu-item ${styleMod}`}>
+        <div className={`menu-item ${styleMod}`} onClick={() => props.history.push(`${props.match.url}${linkUrl}`)}>
             <div className={'menu-item__inner'}>
                 <div className={'menu-item__inner-bg'} style={{background: `url(${imgUrl})`}}></div>
                 <div className={'content'}>
@@ -27,3 +33,5 @@ export const MenuItem = (props: PropsType) => {
         </div>
     );
 }
+
+export const MenuItemWithRouter = withRouter(MenuItem);
