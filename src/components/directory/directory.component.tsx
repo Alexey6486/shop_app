@@ -12,8 +12,6 @@ type GoodsItemType = {
 };
 type DirectoryStateType = Array<GoodsItemType>;
 
-
-
 export const Directory = () => {
 
     const directoryState: DirectoryStateType = [
