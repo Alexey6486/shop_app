@@ -1,8 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import './header.styles.scss';
+import {auth} from '../../firebase/firebase.utils';
 
-export const Header = () => {
+type PropsType = {
+    currentUser: any
+}
+
+export const Header = (props: PropsType) => {
+
+    const {currentUser} = props;
 
     return (
         <div className={'header'}>
@@ -14,9 +21,13 @@ export const Header = () => {
                     <Link className={'link'} to={'/shop'}>
                         Shop
                     </Link>
-                    <Link className={'link'} to={'/auth'}>
-                        Sign In
-                    </Link>
+
+                    {
+                        currentUser
+                            ? <div className={'link'} onClick={() => auth.signOut()}>Sign Out</div>
+                            : <Link className={'link'} to={'/auth'}>Sign In</Link>
+                    }
+
                 </div>
             </div>
         </div>

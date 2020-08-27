@@ -47,6 +47,15 @@
                 margin-bottom: 30px;
             }
 
+            &-two-button-wrap {
+                flex-direction: row;
+                justify-content: space-between;
+
+                button {
+                    width: 48% !important;
+                }
+            }
+
             input {
                 height: 40px;
                 display: flex;

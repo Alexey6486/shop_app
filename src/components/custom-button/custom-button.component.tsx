@@ -6,15 +6,23 @@ interface ChildrenType {
 }
 type PropsType = ChildrenType & {
     type?: string
+    onClick?: () => void
+    isGoogle?: boolean
 }
 
 
 export const CustomButton = (props: PropsType) => {
 
-    const {children} = props;
+    const {children, onClick, type, isGoogle} = props;
+
+    const onClickHandler = () => {
+        if (onClick) {
+            onClick();
+        }
+    }
 
     return (
-        <button className={'custom-button'}>
+        <button className={`${isGoogle ? 'custom-button googleBtn' : 'custom-button'}`} onClick={onClickHandler}>
             {children}
         </button>
     )

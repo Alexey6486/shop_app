@@ -1,3 +1,5 @@
+
+
 .custom-button {
     height: 40px;
     width: 100%;
@@ -12,6 +14,14 @@
     outline: none;
 
     &:hover {
-        background-color: #666666;
+        background-color: lighten(#555555, 10%)
+    }
+
+    &.googleBtn{
+        background-color: #b78cff;
+
+        &:hover{
+            background-color: darken(#b78cff, 10%)
+        }
     }
 }
