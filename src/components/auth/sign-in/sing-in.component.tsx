@@ -30,11 +30,12 @@ export const SignIn = () => {
                 <FormInput type="password" onChange={(e) => password.bind.onChange(e)}
                            value={password.bind.value} label={"password"} required={true}/>
 
-                <div className={'authFormGroup authFormGroup-two-button-wrap'}>
+                <div className={'authFormGroup'}>
                     <CustomButton>Sign In</CustomButton>
-                    <CustomButton onClick={signInWithGoogle} isGoogle={true}>Sign In With Google</CustomButton>
+
                 </div>
             </form>
+            <CustomButton onClick={signInWithGoogle} isGoogle={true}>Sign In With Google</CustomButton>
         </div>
     )
 }

@@ -12,6 +12,35 @@ const config = {
     appId: "1:657635240117:web:3c0e0b2ddf6180c21776fc"
 };
 
+// save authenticated user via google account to our database
+export const createUserProfileDocument = async (userAuth: any, additionalData: any = {}) => {
+    // check if there is a user object
+    if (!userAuth) return;
+
+    // check if there is the user in our firestore
+
+    const userRef = firestore.doc(`users/${userAuth.uid}`)
+
+    // return an object where we can check whether user exists in our db or not
+    // we can apply CRUD only to documentReference (userRef.get/.set/.update/.delete), to doc, while snapShot only represents the data
+    const snapShot = await userRef.get();
+    if (!snapShot.exists) {
+        // basically we need displayName, email, uid
+        const {displayName, email} = userAuth;
+        // we also need to know when we made the doc
+        const createdAt = new Date();
+
+        try {
+            await userRef.set({displayName, email, createdAt, ...additionalData})
+        } catch (error) {
+            console.log(`creating user error: ${error.message}`);
+        }
+    }
+
+    // we need to return userRef in case we have to do something else with it
+    return userRef;
+}
+
 firebase.initializeApp(config);
 
 export const auth = firebase.auth();

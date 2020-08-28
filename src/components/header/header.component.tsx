@@ -1,31 +1,34 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, RouteComponentProps, withRouter} from "react-router-dom";
 import './header.styles.scss';
 import {auth} from '../../firebase/firebase.utils';
 
-type PropsType = {
+type PropsType = RouteComponentProps & {
     currentUser: any
 }
 
-export const Header = (props: PropsType) => {
 
-    const {currentUser} = props;
+const Header = (props: PropsType) => {
+
+    const {currentUser, history} = props;
+
+    const currentUrl = history.location.pathname;
 
     return (
         <div className={'header'}>
             <div className={'container'}>
-                <Link className={'link'} to={'/'}>
+                <Link className={`${currentUrl === '/' ? 'link active' : 'link'}`} to={'/'}>
                     Home
                 </Link>
                 <div className={'nav'}>
-                    <Link className={'link'} to={'/shop'}>
+                    <Link className={`${currentUrl === '/shop' ? 'link active' : 'link'}`} to={'/shop'}>
                         Shop
                     </Link>
 
                     {
                         currentUser
                             ? <div className={'link'} onClick={() => auth.signOut()}>Sign Out</div>
-                            : <Link className={'link'} to={'/auth'}>Sign In</Link>
+                            : <Link className={`${currentUrl === '/auth' ? 'link active' : 'link'}`} to={'/auth'}>Sign In</Link>
                     }
 
                 </div>
@@ -33,3 +36,5 @@ export const Header = (props: PropsType) => {
         </div>
     )
 }
+
+export const HeaderWithRouter = withRouter(Header);
