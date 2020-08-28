@@ -10,9 +10,10 @@ import {auth, createUserProfileDocument} from './firebase/firebase.utils';
 export const App = () => {
 
     const [currentUser, setCurrentUser] = useState<any>(null);
-    console.log(currentUser)
+    //console.log(currentUser)
     // checking if a user is authorized
     useEffect(() => {
+        //console.log(auth)
         auth.onAuthStateChanged( async userAuth => {
             //console.log(userAuth)
             //setCurrentUser(userAuth);
@@ -27,17 +28,19 @@ export const App = () => {
                     userRef.onSnapshot(snapShot => {
                         //console.log(snapShot.data());
                         setCurrentUser({id: snapShot.id, ...snapShot.data()})
+
                     })
                 }
             }
             setCurrentUser(userAuth);
+
         });
 
         return () => {
             //unsubscribeFromAuth();
         }
     }, [])
-
+    console.log(currentUser)
     return (
         <div className="App">
             <HeaderWithRouter currentUser={currentUser}/>
