@@ -10,13 +10,9 @@ import {auth, createUserProfileDocument} from './firebase/firebase.utils';
 export const App = () => {
 
     const [currentUser, setCurrentUser] = useState<any>(null);
-    //console.log(currentUser)
     // checking if a user is authorized
     useEffect(() => {
-        //console.log(auth)
         auth.onAuthStateChanged( async userAuth => {
-            //console.log(userAuth)
-            //setCurrentUser(userAuth);
             if (userAuth) {
                 // we return userRef from the function and here we create const to keep it there because we are
                 // going to use to check if our data base is updated with any new data
@@ -33,14 +29,13 @@ export const App = () => {
                 }
             }
             setCurrentUser(userAuth);
-
         });
 
         return () => {
             //unsubscribeFromAuth();
         }
     }, [])
-    console.log(currentUser)
+
     return (
         <div className="App">
             <HeaderWithRouter currentUser={currentUser}/>

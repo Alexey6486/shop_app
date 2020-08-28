@@ -3,15 +3,23 @@ import { CustomButton } from "../../custom-button/custom-button.component";
 import '../authCommonStyles/auth-in-up.styles.scss';
 import {useFormInputField} from "../authHooks/useFormInputHook";
 import {FormInput} from "../form-input/form-input.component";
-import {signInWithGoogle} from "../../../firebase/firebase.utils";
+import {signInWithGoogle, auth} from "../../../firebase/firebase.utils";
 
 export const SignIn = () => {
 
     const email = useFormInputField("");
     const password = useFormInputField("");
 
-    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        try {
+            await auth.signInWithEmailAndPassword(email.value, password.value);
+            email.clear();
+            password.clear();
+        } catch(error) {
+            console.log(error);
+        }
     }
 
     return (

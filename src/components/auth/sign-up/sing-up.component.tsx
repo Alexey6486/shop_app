@@ -23,7 +23,6 @@ export const SignUp = () => {
         try {
             // createUserWithEmailAndPassword return user auth object
             const { user } = await auth.createUserWithEmailAndPassword(email.value, password.value)
-            console.log(user)
 
             await createUserProfileDocument(user, {displayName: displayName.value})
 
