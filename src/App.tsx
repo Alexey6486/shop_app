@@ -12,7 +12,7 @@ export const App = () => {
     const [currentUser, setCurrentUser] = useState<any>(null);
     // checking if a user is authorized
     useEffect(() => {
-        auth.onAuthStateChanged( async userAuth => {
+        const unsubscribe = auth.onAuthStateChanged( async userAuth => {
             if (userAuth) {
                 // we return userRef from the function and here we create const to keep it there because we are
                 // going to use to check if our data base is updated with any new data
@@ -32,7 +32,7 @@ export const App = () => {
         });
 
         return () => {
-            //unsubscribeFromAuth();
+            unsubscribe();
         }
     }, [])
 
