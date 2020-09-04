@@ -1,32 +1,37 @@
-const SET_CURRENT_USER = 'SET_CURRENT_USER';
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-type UserACType = {
-    type: typeof SET_CURRENT_USER
-    currentUser: any
-}
-
-export const userAC = (currentUser: any): UserACType => {
-    return {
-        type: SET_CURRENT_USER,
-        currentUser
+type CurrentUserType = {
+    createdAt: {
+        nanoseconds: number
+        seconds: number
     }
+    displayName: string
+    email: string
+    id: string
 }
 
-type ActionTypes = UserACType;
-
-type UserStateType = {
-    currentUser: any
-}
+export type UserStateType = {
+    currentUser: CurrentUserType | null
+    isLoggedIn: boolean
+};
 
 const INITIAL_STATE: UserStateType = {
-    currentUser: null
-}
+    currentUser: null,
+    isLoggedIn: false
+};
 
-export const userReducer = (state: UserStateType = INITIAL_STATE, action: ActionTypes) => {
-    switch (action.type) {
-        case SET_CURRENT_USER:
-            return {...state, currentUser: action.currentUser};
-        default:
-            return state;
+const slice = createSlice({
+    name: 'userReducer',
+    initialState: INITIAL_STATE,
+    reducers: {
+        setUserIsLoggedInAC(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
+            state.isLoggedIn = action.payload.isLoggedIn;
+        },
+        setCurrentUserDataAC(state, action: PayloadAction<{ currentUser: CurrentUserType }>) {
+            state.currentUser = action.payload.currentUser;
+        }
     }
-}
+});
+
+export const userReducer = slice.reducer;
+export const {setUserIsLoggedInAC, setCurrentUserDataAC} = slice.actions;

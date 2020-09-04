@@ -40,8 +40,8 @@ export const SignIn = () => {
 
                 <div className={'authFormGroup'}>
                     <CustomButton>Sign In</CustomButton>
-
                 </div>
+
             </form>
             <CustomButton onClick={signInWithGoogle} isGoogle={true}>Sign In With Google</CustomButton>
         </div>

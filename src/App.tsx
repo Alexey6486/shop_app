@@ -6,10 +6,13 @@ import {Homepage} from "./pages/homepage/homepage";
 import {HeaderWithRouter} from './components/header/header.component';
 import {Auth} from "./pages/auth/auth.component";
 import {auth, createUserProfileDocument} from './firebase/firebase.utils';
+import {setCurrentUserDataAC, setUserIsLoggedInAC } from './redux/user/user.reducer';
+import {useDispatch} from "react-redux";
 
 export const App = () => {
 
-    const [currentUser, setCurrentUser] = useState<any>(null);
+    const dispatch = useDispatch();
+    //const [currentUser, setCurrentUser] = useState<any>(null);
     // checking if a user is authorized
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged( async userAuth => {
@@ -23,12 +26,19 @@ export const App = () => {
                     // to get id use snapShot.id
                     userRef.onSnapshot(snapShot => {
                         //console.log(snapShot.data());
-                        setCurrentUser({id: snapShot.id, ...snapShot.data()})
+                        //console.log({id: snapShot.id, ...snapShot.data()});
+                        const userData = snapShot.data();
+                        if (userData) {
+                            const {displayName, email, createdAt} = userData;
+                            dispatch(setCurrentUserDataAC({currentUser: {id: snapShot.id, displayName, email, createdAt: {seconds: createdAt.seconds, nanoseconds: createdAt.nanoseconds}}}))
+                        }
 
+                        dispatch(setUserIsLoggedInAC({isLoggedIn: true}))
                     })
                 }
             }
-            setCurrentUser(userAuth);
+            //dispatch(setUserAC({currentUser: userAuth}));
+            dispatch(setUserIsLoggedInAC({isLoggedIn: false}));
         });
 
         return () => {
@@ -38,7 +48,7 @@ export const App = () => {
 
     return (
         <div className="App">
-            <HeaderWithRouter currentUser={currentUser}/>
+            <HeaderWithRouter/>
             <Switch>
                 <Route exact path={'/'} component={Homepage}/>
                 <Route exact path={'/shop'} component={ShopPage}/>
