@@ -5,6 +5,8 @@ import {auth} from '../../firebase/firebase.utils';
 import {useSelector} from "react-redux";
 import { AppRootStateType } from "../../redux/root-reducers";
 import { UserStateType } from "../../redux/user/user.reducer";
+import { CartIcon } from "../cart-icon/cart-icon.component";
+import {CartDropdown} from "../cart-dropdown/cart-dropdown.component";
 
 type PropsType = RouteComponentProps & {
 
@@ -35,8 +37,10 @@ const Header = (props: PropsType) => {
                             ? <div className={'link'} onClick={() => auth.signOut()}>Sign Out</div>
                             : <Link className={`${currentUrl === '/auth' ? 'link active' : 'link'}`} to={'/auth'}>Sign In</Link>
                     }
+                    <CartIcon />
 
                 </div>
+                <CartDropdown/>
             </div>
         </div>
     )

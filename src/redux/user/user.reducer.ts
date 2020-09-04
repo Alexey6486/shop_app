@@ -10,8 +10,10 @@ type CurrentUserType = {
     id: string
 }
 
+type UserDataType = CurrentUserType | null;
+
 export type UserStateType = {
-    currentUser: CurrentUserType | null
+    currentUser: UserDataType
     isLoggedIn: boolean
 };
 
@@ -27,7 +29,7 @@ const slice = createSlice({
         setUserIsLoggedInAC(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
             state.isLoggedIn = action.payload.isLoggedIn;
         },
-        setCurrentUserDataAC(state, action: PayloadAction<{ currentUser: CurrentUserType }>) {
+        setCurrentUserDataAC(state, action: PayloadAction<{ currentUser: UserDataType }>) {
             state.currentUser = action.payload.currentUser;
         }
     }

@@ -37,7 +37,7 @@ export const App = () => {
                     })
                 }
             }
-            //dispatch(setUserAC({currentUser: userAuth}));
+            dispatch(setCurrentUserDataAC({currentUser: null}));
             dispatch(setUserIsLoggedInAC({isLoggedIn: false}));
         });
 

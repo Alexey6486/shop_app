@@ -1,0 +1,22 @@
+.cart-icon {
+    position: relative;
+    cursor: pointer;
+
+    .shopping-icon {
+        width: 35px;
+        fill: #555555;
+        transition: fill linear 150ms;
+
+        &:hover{
+            fill: #b78cff;
+        }
+    }
+
+    .item-count {
+        color: #555555;
+        position: absolute;
+        top: 13px;
+        left: 8px;
+        font-size: 14px;
+    }
+}
