@@ -7,6 +7,7 @@ import { AppRootStateType } from "../../redux/root-reducers";
 import { UserStateType } from "../../redux/user/user.reducer";
 import { CartIcon } from "../cart-icon/cart-icon.component";
 import {CartDropdown} from "../cart-dropdown/cart-dropdown.component";
+import { CartStateType } from "../../redux/cart/cart.reducer";
 
 type PropsType = RouteComponentProps & {
 
@@ -19,7 +20,14 @@ const Header = (props: PropsType) => {
     const authState = useSelector<AppRootStateType, UserStateType>(state => state.userReducer);
     const {isLoggedIn} = authState;
 
+    const cartState = useSelector<AppRootStateType, CartStateType>(state => state.cartReducer);
+    const {showCartPopUp, cartItems} = cartState;
+
     const currentUrl = history.location.pathname;
+
+    const reduceTotalAmountOfItems = cartItems.reduce((acc, item) => {
+        return acc + item.quantity;
+    }, 0);
 
     return (
         <div className={'header'}>
@@ -37,10 +45,9 @@ const Header = (props: PropsType) => {
                             ? <div className={'link'} onClick={() => auth.signOut()}>Sign Out</div>
                             : <Link className={`${currentUrl === '/auth' ? 'link active' : 'link'}`} to={'/auth'}>Sign In</Link>
                     }
-                    <CartIcon />
-
+                    <CartIcon amountOfGoodsInCart={reduceTotalAmountOfItems}/>
                 </div>
-                <CartDropdown/>
+                { showCartPopUp && <CartDropdown/> }
             </div>
         </div>
     )

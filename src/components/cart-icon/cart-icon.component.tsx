@@ -4,7 +4,13 @@ import {ReactComponent as ShoppingIcon} from '../../assets/icons/bag.svg';
 import {useDispatch} from "react-redux";
 import {toggleCartPopUp} from "../../redux/cart/cart.reducer";
 
-export const CartIcon = () => {
+type PropsType = {
+    amountOfGoodsInCart: number
+}
+
+export const CartIcon = (props: PropsType) => {
+
+    const {amountOfGoodsInCart} = props;
 
     const dispatch = useDispatch();
 
@@ -15,7 +21,7 @@ export const CartIcon = () => {
     return (
         <div className={'cart-icon'} onClick={showHideCartPopUp}>
             <ShoppingIcon className={'shopping-icon'}/>
-            <span className={'item-count'}>0</span>
+            <span className={'item-count'}>{amountOfGoodsInCart}</span>
         </div>
     )
 }

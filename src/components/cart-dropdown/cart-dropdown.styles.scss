@@ -1,20 +1,16 @@
 .cart-dropdown{
     padding: 15px;
     width: 300px;
+    display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     position: absolute;
     top: 55px;
     right: 15px;
-    z-index: 2;
+    z-index: 10;
     background-color: #ffffff;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    display: none;
-
-    &.open{
-        display: flex;
-    }
 
     .cart-items{
         height: 250px;
