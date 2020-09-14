@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback, useMemo} from "react";
 import {Link, RouteComponentProps, withRouter} from "react-router-dom";
 import './header.styles.scss';
 import {auth} from '../../firebase/firebase.utils';
@@ -25,9 +25,12 @@ const Header = (props: PropsType) => {
 
     const currentUrl = history.location.pathname;
 
-    const reduceTotalAmountOfItems = cartItems.reduce((acc, item) => {
-        return acc + item.quantity;
-    }, 0);
+    const reduceTotalAmountOfItems = useMemo(() => {
+        return cartItems.reduce((acc, item) => {
+            console.log('called');
+            return acc + item.quantity;
+        }, 0);
+    }, [cartItems]);
 
     return (
         <div className={'header'}>
@@ -45,7 +48,7 @@ const Header = (props: PropsType) => {
                             ? <div className={'link'} onClick={() => auth.signOut()}>Sign Out</div>
                             : <Link className={`${currentUrl === '/auth' ? 'link active' : 'link'}`} to={'/auth'}>Sign In</Link>
                     }
-                    <CartIcon amountOfGoodsInCart={reduceTotalAmountOfItems}/>
+                    <CartIcon inCart={reduceTotalAmountOfItems}/>
                 </div>
                 { showCartPopUp && <CartDropdown/> }
             </div>

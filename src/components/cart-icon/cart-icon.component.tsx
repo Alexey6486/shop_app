@@ -5,12 +5,12 @@ import {useDispatch} from "react-redux";
 import {toggleCartPopUp} from "../../redux/cart/cart.reducer";
 
 type PropsType = {
-    amountOfGoodsInCart: number
+    inCart: number
 }
 
 export const CartIcon = (props: PropsType) => {
 
-    const {amountOfGoodsInCart} = props;
+    const {inCart} = props;
 
     const dispatch = useDispatch();
 
@@ -21,7 +21,7 @@ export const CartIcon = (props: PropsType) => {
     return (
         <div className={'cart-icon'} onClick={showHideCartPopUp}>
             <ShoppingIcon className={'shopping-icon'}/>
-            <span className={'item-count'}>{amountOfGoodsInCart}</span>
+            <span className={'item-count'}>{inCart}</span>
         </div>
     )
 }
