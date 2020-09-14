@@ -1,0 +1,33 @@
+.cart-item{
+    display: flex;
+    align-items: flex-start;
+
+    &:not(:last-child) {
+        margin-bottom: 20px;
+    }
+
+    img {
+        width: 50px;
+        max-width: 100%;
+        display: block;
+        margin-right: 15px;
+    }
+
+    .item-details{
+        color: #555555;
+        line-height: 1;
+
+        &__name{
+            margin-bottom: 5px;
+            font-weight: 300;
+        }
+
+        &__quantity{
+            margin-bottom: 5px;
+        }
+
+        &__price{
+            font-weight: 600;
+        }
+    }
+}
