@@ -1,17 +1,15 @@
-import React, {useCallback, useMemo} from "react";
+import React, {useMemo} from "react";
 import {Link, RouteComponentProps, withRouter} from "react-router-dom";
 import './header.styles.scss';
 import {auth} from '../../firebase/firebase.utils';
 import {useSelector} from "react-redux";
-import { AppRootStateType } from "../../redux/root-reducers";
-import { UserStateType } from "../../redux/user/user.reducer";
-import { CartIcon } from "../cart-icon/cart-icon.component";
+import {AppRootStateType} from "../../redux/root-reducers";
+import {UserStateType} from "../../redux/user/user.reducer";
+import {CartIcon} from "../cart-icon/cart-icon.component";
 import {CartDropdown} from "../cart-dropdown/cart-dropdown.component";
-import { CartStateType } from "../../redux/cart/cart.reducer";
+import {CartStateType} from "../../redux/cart/cart.reducer";
 
-type PropsType = RouteComponentProps & {
-
-}
+type PropsType = RouteComponentProps & {}
 
 const Header = (props: PropsType) => {
 
@@ -27,7 +25,6 @@ const Header = (props: PropsType) => {
 
     const reduceTotalAmountOfItems = useMemo(() => {
         return cartItems.reduce((acc, item) => {
-            console.log('called');
             return acc + item.quantity;
         }, 0);
     }, [cartItems]);
@@ -46,11 +43,12 @@ const Header = (props: PropsType) => {
                     {
                         isLoggedIn
                             ? <div className={'link'} onClick={() => auth.signOut()}>Sign Out</div>
-                            : <Link className={`${currentUrl === '/auth' ? 'link active' : 'link'}`} to={'/auth'}>Sign In</Link>
+                            : <Link className={`${currentUrl === '/auth' ? 'link active' : 'link'}`} to={'/auth'}>Sign
+                                In</Link>
                     }
                     <CartIcon inCart={reduceTotalAmountOfItems}/>
                 </div>
-                { showCartPopUp && <CartDropdown/> }
+                {showCartPopUp && <CartDropdown/>}
             </div>
         </div>
     )

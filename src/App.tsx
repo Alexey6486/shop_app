@@ -8,6 +8,7 @@ import {Auth} from "./pages/auth/auth.component";
 import {auth, createUserProfileDocument} from './firebase/firebase.utils';
 import {setCurrentUserDataAC, setUserIsLoggedInAC } from './redux/user/user.reducer';
 import {useDispatch} from "react-redux";
+import {CheckoutPage} from "./pages/checkout/checkout.component";
 
 export const App = () => {
 
@@ -53,6 +54,7 @@ export const App = () => {
                 <Route exact path={'/'} component={Homepage}/>
                 <Route exact path={'/shop'} component={ShopPage}/>
                 <Route exact path={'/auth'} component={Auth}/>
+                <Route exact path={'/checkout'} component={CheckoutPage}/>
             </Switch>
         </div>
     );

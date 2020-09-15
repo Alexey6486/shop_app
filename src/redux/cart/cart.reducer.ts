@@ -1,6 +1,10 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {SectionItemType} from "../../pages/shop/shopData";
 
+type ChangeQuantityType = {
+    direction: 'inc' | 'dec';
+    id: number
+}
 type SectionItemInCartType = SectionItemType & {
     quantity: number
 };
@@ -31,8 +35,23 @@ const slice = createSlice({
                 state.cartItems[index].quantity++;
             }
         },
+        removeItemFromCart(state, action: PayloadAction<{ id: number }>) {
+            const index = state.cartItems.findIndex(item => item.id === action.payload.id);
+            state.cartItems.splice(index, 1);
+        },
+        changeQuantity(state, action: PayloadAction<ChangeQuantityType>) {
+            const index = state.cartItems.findIndex(item => item.id === action.payload.id);
+            if (action.payload.direction === 'dec') {
+                if (state.cartItems[index].quantity > 1) {
+                    state.cartItems[index].quantity--;
+                }
+            }
+            if (action.payload.direction === 'inc') {
+                state.cartItems[index].quantity++;
+            }
+        },
     }
 });
 
 export const cartReducer = slice.reducer;
-export const {toggleCartPopUp, addItemToCart} = slice.actions;
+export const {toggleCartPopUp, addItemToCart, removeItemFromCart, changeQuantity} = slice.actions;

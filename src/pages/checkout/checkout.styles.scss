@@ -1,0 +1,114 @@
+.checkout-page {
+    padding: 20px;
+    width: 100%;
+}
+
+.checkout-page__title {
+    padding: 5px 5px 20px;
+    color: #333333;
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+.checkout-table {
+    width: 100%;
+    padding: 15px 20px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+
+    &__header {
+        width: 100%;
+        padding: 0 0 10px 0;
+        border-bottom: 1px solid #b78cff;
+        display: flex;
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 10px 0 0 0;
+    }
+
+    &__row {
+        width: 100%;
+        display: flex;
+        padding: 5px 0;
+
+        &:not(:last-child) {
+            border-bottom: 1px solid #e9e9e9;
+        }
+    }
+
+    &__column {
+        color: #444444;
+        padding: 0 5px;
+
+        &-product {
+            width: 25%;
+
+            img {
+                width: 100%;
+                max-width: 100px;
+                display: block;
+            }
+        }
+
+        &-description {
+            width: 25%;
+        }
+
+        &-quantity {
+            width: 20%;
+            display: flex;
+
+            .svg-wrap {
+                padding: 0 5px;
+
+                &.disabled {
+                    pointer-events: none;
+                    opacity: 0.7;
+                }
+            }
+
+            svg {
+                cursor: pointer;
+                fill: #444444;
+                transition: fill linear 150ms;
+                width: 20px;
+
+                &:hover {
+                    fill: #b78cff;
+                }
+            }
+        }
+
+        &-price {
+            width: 20%
+        }
+
+        &-remove {
+            width: 10%;
+            text-align: end;
+
+            svg {
+                cursor: pointer;
+                fill: #444444;
+                transition: fill linear 150ms;
+                width: 20px;
+
+                &:hover {
+                    fill: #b78cff;
+                }
+            }
+        }
+    }
+}
+
+.checkout-total {
+    width: 100%;
+    padding: 20px;
+    text-align: end;
+    font-weight: 600;
+    font-size: 20px;
+    color: #444444;
+}
