@@ -11,11 +11,11 @@ type GoodsItemType = {
 type DirectoryStateType = Array<GoodsItemType>;
 
 const INITIAL_STATE: DirectoryStateType = [
-    {title: 'Goods_01', id: '1', imgUrl: imgBg, linkUrl: 'goods_01'},
-    {title: 'Goods_02', id: '2', imgUrl: imgBg, linkUrl: 'goods_02'},
-    {title: 'Goods_03', id: '3', imgUrl: imgBg, linkUrl: 'goods_03'},
-    {title: 'Goods_04', id: '4', imgUrl: imgBg_large, linkUrl: 'goods_04'},
-    {title: 'Goods_05', id: '5', imgUrl: imgBg_large, linkUrl: 'goods_05'},
+    {title: 'hats', id: '1', imgUrl: imgBg, linkUrl: 'shop/hats'},
+    {title: 'sneakers', id: '2', imgUrl: imgBg, linkUrl: 'shop/sneakers'},
+    {title: 'jackets', id: '3', imgUrl: imgBg, linkUrl: 'shop/jackets'},
+    {title: 'womens', id: '4', imgUrl: imgBg_large, linkUrl: 'shop/womens'},
+    {title: 'mens', id: '5', imgUrl: imgBg_large, linkUrl: 'shop/mens'},
 ];
 
 const slice = createSlice({

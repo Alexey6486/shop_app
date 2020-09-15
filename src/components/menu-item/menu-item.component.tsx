@@ -14,7 +14,7 @@ type ParentPropsType = {
 type PropsType = RouteComponentProps<WithRouterPropsType> & ParentPropsType;
 
 const MenuItem = (props: PropsType) => {
-    //console.log(props)
+
     const {title, styleMod, imgUrl, linkUrl} = props;
 
     return (
