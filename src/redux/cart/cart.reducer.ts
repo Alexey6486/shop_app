@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {SectionItemType} from "../../pages/shop/shopData";
+import {SectionItemType} from "../shop/shop.reducer";
 
 type ChangeQuantityType = {
     direction: 'inc' | 'dec';

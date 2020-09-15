@@ -1,17 +1,17 @@
 import React from "react";
 import './preview-collection.styles.scss';
-import {SectionItemType} from "../../pages/shop/shopData";
 import {CollectionItem} from "../collection-item/collection-item.component";
 import { useDispatch } from "react-redux";
 import { addItemToCart } from "../../redux/cart/cart.reducer";
+import {SectionItemType} from "../../redux/shop/shop.reducer";
 
 type PropsType = {
     title: string
     items: Array<SectionItemType>
-    routeName: string
+    routeName?: string
 }
 
-export const PreviewCollection = (props: PropsType) => {
+export const PreviewCollectionComponent = (props: PropsType) => {
 
     const dispatch = useDispatch();
 

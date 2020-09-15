@@ -1,5 +1,6 @@
 import React from "react";
-import {SectionItemType} from "../../pages/shop/shopData";
+import { SectionItemType } from "../../redux/shop/shop.reducer";
+
 import './collection-item.styles.scss';
 
 type PropsType = SectionItemType & {

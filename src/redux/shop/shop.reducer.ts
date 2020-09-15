@@ -1,19 +1,35 @@
+import { createSlice } from "@reduxjs/toolkit";
 
 export type SectionItemType = {
     id: number
     name: string
     imageUrl: string
     price: number
-}
+};
 export type ShopSectionType = {
     id: number
     title: string
     routeName: string
     items: Array<SectionItemType>
-}
-export type ShopDataType = Array<ShopSectionType>
+};
+export type ShopDataType = Array<ShopSectionType>;
 
-export const SHOP_DATA: ShopDataType = [
+export interface CollectionsIdType extends Record<string, any> {
+    hats: number,
+    sneakers: number,
+    jackets: number,
+    womens: number,
+    mens: number,
+}
+export const COLLECTIONS_ID_MAP: CollectionsIdType = {
+    hats: 1,
+    sneakers: 2,
+    jackets: 3,
+    womens: 4,
+    mens: 5,
+};
+
+const INITIAL_STATE: ShopDataType = [
     {
         id: 1,
         title: 'Hats',
@@ -259,4 +275,13 @@ export const SHOP_DATA: ShopDataType = [
             }
         ]
     }
-]
+];
+
+const slice = createSlice({
+    name: 'shopReducer',
+    initialState: INITIAL_STATE,
+    reducers: {}
+});
+
+export const shopReducer = slice.reducer;
+export const {} = slice.actions;
