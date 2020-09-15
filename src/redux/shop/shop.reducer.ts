@@ -12,25 +12,31 @@ export type ShopSectionType = {
     routeName: string
     items: Array<SectionItemType>
 };
-export type ShopDataType = Array<ShopSectionType>;
-
-export interface CollectionsIdType extends Record<string, any> {
-    hats: number,
-    sneakers: number,
-    jackets: number,
-    womens: number,
-    mens: number,
-}
-export const COLLECTIONS_ID_MAP: CollectionsIdType = {
-    hats: 1,
-    sneakers: 2,
-    jackets: 3,
-    womens: 4,
-    mens: 5,
+export interface ShopDataType extends Record<string, ShopSectionType>  {
+    hats: ShopSectionType,
+    sneakers: ShopSectionType,
+    jackets: ShopSectionType,
+    womens: ShopSectionType,
+    mens: ShopSectionType,
 };
 
-const INITIAL_STATE: ShopDataType = [
-    {
+// export interface CollectionsIdType extends Record<string, any> {
+//     hats: number,
+//     sneakers: number,
+//     jackets: number,
+//     womens: number,
+//     mens: number,
+// }
+// export const COLLECTIONS_ID_MAP: CollectionsIdType = {
+//     hats: 1,
+//     sneakers: 2,
+//     jackets: 3,
+//     womens: 4,
+//     mens: 5,
+// };
+
+const INITIAL_STATE: ShopDataType = {
+    hats: {
         id: 1,
         title: 'Hats',
         routeName: 'hats',
@@ -91,7 +97,7 @@ const INITIAL_STATE: ShopDataType = [
             }
         ]
     },
-    {
+    sneakers: {
         id: 2,
         title: 'Sneakers',
         routeName: 'sneakers',
@@ -146,7 +152,7 @@ const INITIAL_STATE: ShopDataType = [
             }
         ]
     },
-    {
+    jackets: {
         id: 3,
         title: 'Jackets',
         routeName: 'jackets',
@@ -183,7 +189,7 @@ const INITIAL_STATE: ShopDataType = [
             }
         ]
     },
-    {
+    womens: {
         id: 4,
         title: 'Womens',
         routeName: 'womens',
@@ -232,7 +238,7 @@ const INITIAL_STATE: ShopDataType = [
             }
         ]
     },
-    {
+    mens: {
         id: 5,
         title: 'Mens',
         routeName: 'mens',
@@ -275,7 +281,7 @@ const INITIAL_STATE: ShopDataType = [
             }
         ]
     }
-];
+};
 
 const slice = createSlice({
     name: 'shopReducer',

@@ -1,10 +1,11 @@
 import React from "react";
 import './category.styles.scss';
 import {RouteComponentProps} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../redux/root-reducers";
-import {COLLECTIONS_ID_MAP, ShopDataType} from "../../redux/shop/shop.reducer";
-import {PreviewCollectionComponent} from "../../components/preview-collection/preview-collection.component";
+import {ShopDataType} from "../../redux/shop/shop.reducer";
+import {addItemToCart} from "../../redux/cart/cart.reducer";
+import {CollectionItem} from "../../components/collection-item/collection-item.component";
 
 type RoutePropsType = {
     collectionId: string
@@ -15,19 +16,29 @@ type PropsType = RouteComponentProps<RoutePropsType> & {
 
 export const CollectionPage = (props: PropsType) => {
 
+    const dispatch = useDispatch();
+
     const shopState = useSelector<AppRootStateType, ShopDataType>(state => state.shopReducer);
 
     const {match} = props;
 
-    const selectCollection = shopState.find(collection => collection.id === COLLECTIONS_ID_MAP[match.params.collectionId]);
+    const selectCollection = shopState[match.params.collectionId];
+    //const selectCollection = shopState.find(collection => collection.id === COLLECTIONS_ID_MAP[match.params.collectionId]);
 
     const collectionTitle = selectCollection ? selectCollection.title : '';
     const collectionItems = selectCollection ? selectCollection.items : [];
-    const collectionItemsMap = <PreviewCollectionComponent title={collectionTitle} items={collectionItems}/>;
+
+    const itemsMap = collectionItems.map(i => {
+            const onAddItem = () => dispatch(addItemToCart(i));
+            return <CollectionItem key={i.id} {...i} onAddItem={onAddItem}/>
+        });
 
     return (
         <div className={'category'}>
-            {collectionItemsMap}
+            <h2 className={'shop-page__collection-title'}>{collectionTitle} collection:</h2>
+            <div className={'collection-items'}>
+                {itemsMap}
+            </div>
         </div>
     )
 };
