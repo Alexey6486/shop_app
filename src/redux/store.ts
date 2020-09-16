@@ -1,11 +1,16 @@
-import {createStore, applyMiddleware} from "redux";
-import {persRed, rootReducers} from "./root-reducers";
+import {persRed} from "./root-reducers";
 import logger from 'redux-logger';
 import {configureStore} from "@reduxjs/toolkit";
 import {FLUSH, persistStore, REHYDRATE} from 'redux-persist';
 import {PAUSE, PERSIST, PURGE, REGISTER} from "redux-persist/es/constants";
 
-const middleware = [logger];
+let middleware: Array<any> = [];
+
+if (process.env.NODE_ENV === 'development') {
+    middleware = [...middleware, logger];
+} else {
+    middleware = [...middleware];
+}
 
 //export const store = createStore(rootReducers, applyMiddleware(...middleware));
 
