@@ -1,5 +1,5 @@
 import React, {useMemo} from "react";
-import {Link, RouteComponentProps, withRouter} from "react-router-dom";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 import './header.styles.scss';
 import {auth} from '../../firebase/firebase.utils';
 import {useSelector} from "react-redux";
@@ -8,6 +8,7 @@ import {UserStateType} from "../../redux/user/user.reducer";
 import {CartIcon} from "../cart-icon/cart-icon.component";
 import {CartDropdown} from "../cart-dropdown/cart-dropdown.component";
 import {CartStateType} from "../../redux/cart/cart.reducer";
+import {HeaderContainer, HeaderFrame, LinkContainer, NavContainer} from "./header.styled";
 
 type PropsType = RouteComponentProps & {}
 
@@ -29,28 +30,29 @@ const Header = (props: PropsType) => {
         }, 0);
     }, [cartItems]);
 
+    const active = (curUrl: string, linkUrl: string) => curUrl === linkUrl;
+
     return (
-        <div className={'header'}>
-            <div className={'container'}>
-                <Link className={`${currentUrl === '/' ? 'link active' : 'link'}`} to={'/'}>
+        <HeaderContainer>
+            <HeaderFrame>
+                <LinkContainer active={active(currentUrl, '/')} to={'/'}>
                     Home
-                </Link>
-                <div className={'nav'}>
-                    <Link className={`${currentUrl === '/shop' ? 'link active' : 'link'}`} to={'/shop'}>
+                </LinkContainer>
+                <NavContainer>
+                    <LinkContainer active={active(currentUrl, '/shop')} to={'/shop'}>
                         Shop
-                    </Link>
+                    </LinkContainer>
 
                     {
                         isLoggedIn
-                            ? <div className={'link'} onClick={() => auth.signOut()}>Sign Out</div>
-                            : <Link className={`${currentUrl === '/auth' ? 'link active' : 'link'}`} to={'/auth'}>Sign
-                                In</Link>
+                            ? <LinkContainer as={'div'} onClick={() => auth.signOut()}>Sign Out</LinkContainer>
+                            : <LinkContainer active={active(currentUrl, '/auth')} to={'/auth'}>Sign In</LinkContainer>
                     }
                     <CartIcon inCart={reduceTotalAmountOfItems}/>
-                </div>
+                </NavContainer>
                 {showCartPopUp && <CartDropdown/>}
-            </div>
-        </div>
+            </HeaderFrame>
+        </HeaderContainer>
     )
 }
 

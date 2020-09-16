@@ -1,5 +1,6 @@
 import React, {ReactChild, ReactChildren} from "react";
 import './custom-button.styles.scss';
+import {CustomButtonComponent} from "./custom-buttom.styled";
 
 interface ChildrenType {
     children: ReactChild | ReactChildren;
@@ -22,8 +23,8 @@ export const CustomButton = (props: PropsType) => {
     }
 
     return (
-        <button className={`${isGoogle ? 'custom-button googleBtn' : 'custom-button'}`} onClick={onClickHandler}>
+        <CustomButtonComponent isGoogle={isGoogle} onClick={onClickHandler}>
             {children}
-        </button>
+        </CustomButtonComponent>
     )
 }
