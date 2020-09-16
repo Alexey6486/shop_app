@@ -13,8 +13,14 @@ import {CheckoutPage} from "./pages/checkout/checkout.component";
 export const App = () => {
 
     const dispatch = useDispatch();
-    //const [currentUser, setCurrentUser] = useState<any>(null);
+
     // checking if a user is authorized
+    // const [currentUser, setCurrentUser] = useState<any>(null);
+
+    // used shopState only once to transfer local shop data base to firebase;
+    // const shopState = useSelector<AppRootStateType, ShopDataType>(state => state.shopReducer);
+    // const shopDataMap = Object.keys(shopState).map(i => shopState[i]);
+
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async userAuth => {
             if (userAuth) {
@@ -26,8 +32,8 @@ export const App = () => {
                     // getting the snapshot of a user data applying .data, however there is no id in the response object
                     // to get id use snapShot.id
                     userRef.onSnapshot(snapShot => {
-                        //console.log(snapShot.data());
-                        //console.log({id: snapShot.id, ...snapShot.data()});
+                        // console.log(snapShot.data());
+                        // console.log({id: snapShot.id, ...snapShot.data()});
                         const userData = snapShot.data();
                         if (userData) {
                             const {displayName, email, createdAt} = userData;
@@ -47,7 +53,11 @@ export const App = () => {
             }
             dispatch(setCurrentUserDataAC({currentUser: null}));
             dispatch(setUserIsLoggedInAC({isLoggedIn: false}));
+
+            // used addCollectionAndDocuments only once to transfer local shop data base to firebase; DO NOT uncomment following line!
+            // addCollectionAndDocuments('collections', shopDataMap.map(({title, items}) => ({title, items})));
         });
+
 
         return () => {
             unsubscribe();

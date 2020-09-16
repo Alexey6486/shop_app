@@ -30,7 +30,7 @@ const Header = (props: PropsType) => {
         }, 0);
     }, [cartItems]);
 
-    const active = (curUrl: string, linkUrl: string) => curUrl === linkUrl;
+    const active = (curUrl: string, linkUrl: string) => curUrl === linkUrl ? 'true' : 'false';
 
     return (
         <HeaderContainer>

@@ -2,6 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
+
 const config = {
     apiKey: "AIzaSyBtSyWSL3XSprJEirT0ZGWktsjBNR-2JoE",
     authDomain: "shop-f01e1.firebaseapp.com",
@@ -47,8 +48,43 @@ export const createUserProfileDocument = async (userAuth: any, additionalData: a
 
     // we need to return userRef in case we have to do something else with it
     return userRef;
-}
+};
 
+export const addCollectionAndDocuments = async (collectionKey: any, objectsToAdd: any) => {
+    const collectionRef = firestore.collection(collectionKey);
+    // console.log(collectionRef);
 
+    // we need an array with collections, in order to do so firebase has a batch/group function
+    const batch = firestore.batch();
+
+    // iterate all collections (hats, jackets, etc.) and add/batch each of them into a batch array
+    objectsToAdd.forEach((obj: any) => {
+        const newDocRef = collectionRef.doc();
+        // console.log(newDocRef);
+        batch.set(newDocRef, obj);
+    });
+
+    // batch.commit returns promise
+    return await batch.commit();
+};
+
+// transform data from firebase to our app objects structure
+export const convertCollectionsSnapshotToMap = (collections: any) => {
+    const transformedCollection = collections.docs.map((doc: any) => {
+        const {title, items} = doc.data();
+
+        return {
+            routeName: encodeURI(title.toLowerCase()),
+            id: doc.id,
+            title,
+            items
+        }
+    });
+
+    return transformedCollection.reduce((acc: any, collection: any) => {
+        acc[collection.title.toLowerCase()] = collection;
+        return acc;
+    }, {});
+};
 
 export default firebase;

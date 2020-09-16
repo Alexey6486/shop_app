@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {Container} from "../../styles/global.styled.components";
 
 interface Active {
-    active?: boolean
+    active?: 'true' | 'false';
 }
 
 export const HeaderContainer = styled.div`
@@ -25,7 +25,7 @@ export const NavContainer = styled.div`
     align-items: center;
     height: 100%;
 `;
-export const LinkContainer = styled(Link)<Active>`
+export const LinkContainer = styled(Link)`
     text-transform: uppercase;
     font-weight: 300;
     color: #333333;
@@ -38,7 +38,7 @@ export const LinkContainer = styled(Link)<Active>`
     display: flex;
     align-items: center;
   
-    border-bottom: ${(props) => props.active ? '2px solid #d2cece' : '2px solid transparent'};
+    border-bottom: ${(props: Active) => props.active === 'true' ? '2px solid #d2cece' : '2px solid transparent'};
     
     :hover{
         color: #b78cff;
