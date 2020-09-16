@@ -8,7 +8,7 @@ import {UserStateType} from "../../redux/user/user.reducer";
 import {CartIcon} from "../cart-icon/cart-icon.component";
 import {CartDropdown} from "../cart-dropdown/cart-dropdown.component";
 import {CartStateType} from "../../redux/cart/cart.reducer";
-import {HeaderContainer, HeaderFrame, LinkContainer, NavContainer} from "./header.styled";
+import {HeaderContainer, HeaderFrame, LinkContainer, NavContainer} from "./header.styles";
 
 type PropsType = RouteComponentProps & {}
 

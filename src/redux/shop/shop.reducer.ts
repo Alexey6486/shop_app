@@ -12,8 +12,12 @@ export type ShopSectionType = {
     routeName: string
     items: Array<SectionItemType>
 };
-export interface ShopDataType extends Record<string, ShopSectionType> {
-    [key: string]: ShopSectionType,
+export interface CollectionsType extends Record<string, any> {
+    [key: string]: ShopSectionType
+}
+export type ShopDataType = {
+    collections: CollectionsType
+    isLoading: boolean
 };
 
 // export interface CollectionsIdType extends Record<string, any> {
@@ -32,21 +36,25 @@ export interface ShopDataType extends Record<string, ShopSectionType> {
 // };
 
 const INITIAL_STATE: ShopDataType = {
-
+    collections: {},
+    isLoading: true,
 };
 
 const slice = createSlice({
     name: 'shopReducer',
     initialState: INITIAL_STATE,
     reducers: {
-        getShopData(state, action: PayloadAction<ShopDataType>) {
-            return action.payload;
+        getShopData(state, action: PayloadAction<CollectionsType>) {
+            state.collections = action.payload;
+        },
+        isLoadingData(state, action: PayloadAction<{isLoading: boolean}>) {
+            state.isLoading = action.payload.isLoading;
         },
     }
 });
 
 export const shopReducer = slice.reducer;
-export const {getShopData} = slice.actions;
+export const {getShopData, isLoadingData} = slice.actions;
 
 // hats: {
 //     id: 1,

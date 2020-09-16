@@ -1,6 +1,6 @@
 import React, {ReactChild, ReactChildren} from "react";
 import './custom-button.styles.scss';
-import {CustomButtonComponent} from "./custom-buttom.styled";
+import {CustomButtonComponent} from "./custom-buttom.styles";
 
 interface ChildrenType {
     children: ReactChild | ReactChildren;

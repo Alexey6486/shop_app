@@ -19,19 +19,20 @@ export const CollectionPage = (props: PropsType) => {
     const dispatch = useDispatch();
 
     const shopState = useSelector<AppRootStateType, ShopDataType>(state => state.shopReducer);
+    const {collections} = shopState;
 
     const {match} = props;
 
-    const selectCollection = shopState[match.params.collectionId];
+    const selectCollection = collections[match.params.collectionId];
     //const selectCollection = shopState.find(collection => collection.id === COLLECTIONS_ID_MAP[match.params.collectionId]);
 
     const collectionTitle = selectCollection ? selectCollection.title : '';
     const collectionItems = selectCollection ? selectCollection.items : [];
 
-    const itemsMap = collectionItems.map(i => {
+    const itemsMap = collectionItems ? collectionItems.map(i => {
             const onAddItem = () => dispatch(addItemToCart(i));
             return <CollectionItem key={i.id} {...i} onAddItem={onAddItem}/>
-        });
+        }) : null;
 
     return (
         <div className={'category'}>

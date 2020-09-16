@@ -8,6 +8,7 @@ import {PreviewCollectionComponent} from "../preview-collection/preview-collecti
 export const CollectionsOverviewComponent = () => {
 
     const shopState = useSelector<AppRootStateType, ShopDataType>(state => state.shopReducer);
+    const {collections} = shopState;
 
     // let shopDataArr = [];
     // for (let i in shopState) {
@@ -18,11 +19,11 @@ export const CollectionsOverviewComponent = () => {
     // });
 
     //console.log(Object.keys(shopState).map(i => shopState[i]))
-    const shopDataMap = Object.keys(shopState)
-        .map(i => shopState[i])
+    const shopDataMap = collections ? Object.keys(collections)
+        .map(i => collections[i])
         .map(({id, ...otherProps}) => {
             return <PreviewCollectionComponent key={id} {...otherProps}/>
-    });
+        }) : [];
 
     return (
         <div className={'collections-overview'}>
