@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getShopData, isLoadingData, ShopDataType} from "../../redux/shop/shop.reducer";
 import {convertCollectionsSnapshotToMap, firestore} from "../../firebase/firebase.utils";
 import {AppRootStateType} from "../../redux/root-reducers";
-import { WithSpinner } from "../../components/spinner/spinner.component";
+import { WithSpinner } from "../../components/loading/loading.component";
 
 type RoutePropsType = {};
 type PropsType = RouteComponentProps<RoutePropsType> & {};

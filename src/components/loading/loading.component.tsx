@@ -1,9 +1,8 @@
 import React from "react";
-import './spinner.styles';
-import { SpinnerWrapComponent } from "./spinner.styles";
+import {LoadingIndicator} from "./loadingIndicator/loadingIndicator.component";
 
 export const WithSpinner = (WrappedComponent: any) => ({isLoading, ...otherProps}: any) => {
     return isLoading ? (
-        <SpinnerWrapComponent>Spinner</SpinnerWrapComponent>
+        <LoadingIndicator/>
     ) : <WrappedComponent {...otherProps}/>;
 };
