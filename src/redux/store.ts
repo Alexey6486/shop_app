@@ -4,7 +4,7 @@ import {configureStore} from "@reduxjs/toolkit";
 import {FLUSH, persistStore, REHYDRATE} from 'redux-persist';
 import {PAUSE, PERSIST, PURGE, REGISTER} from "redux-persist/es/constants";
 import createSagaMiddleware from 'redux-saga';
-import {watchLoadShopData} from "./shop/shop.reducer";
+import {rootSaga} from "./root-sage";
 
 export const sagaMiddleware = createSagaMiddleware();
 
@@ -28,4 +28,4 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 
-sagaMiddleware.run(watchLoadShopData);
+sagaMiddleware.run(rootSaga);

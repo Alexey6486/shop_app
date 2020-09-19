@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction, ThunkDispatch} from "@reduxjs/toolkit";
 import {AppRootStateType} from "../root-reducers";
 import {convertCollectionsSnapshotToMap, firestore} from "../../firebase/firebase.utils";
-import {takeEvery, put, call} from 'redux-saga/effects';
+import {takeEvery, takeLatest, put, call} from 'redux-saga/effects';
 
 export type SectionItemType = {
     id: number
@@ -103,6 +103,11 @@ function* workerLoadShopData() {
 // takeEvery - create an none blocking call in order to not stop our application to continue running other sagas
 // or whatever else in our app, it doesn't pause js
 export function* watchLoadShopData() {
-    yield takeEvery(initSagaLoadShopData, workerLoadShopData);
+    yield takeLatest(initSagaLoadShopData, workerLoadShopData);
 }
+
+// take - can return payload and each next yield will not fires until current is done while takeEvery will start new cycle
+
+// takeLatest - say we have a counter, if we click 5 times using take then delay then put it makes a pause for delay's time
+// and then increment counter 5 times; however if we use in similar case takeLatest in increases the counter only once, last click
 
