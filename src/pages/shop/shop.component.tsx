@@ -4,7 +4,7 @@ import {CollectionsOverviewComponent} from "../../components/collections-overvie
 import {Route, RouteComponentProps, withRouter} from 'react-router-dom';
 import {CollectionPage} from "../collection/category.component";
 import {useDispatch, useSelector} from "react-redux";
-import {getShopDataTC, ShopDataType} from "../../redux/shop/shop.reducer";
+import {getShopDataTC, initSagaLoadShopData, ShopDataType} from "../../redux/shop/shop.reducer";
 import {AppRootStateType} from "../../redux/root-reducers";
 import {WithSpinner} from "../../components/loading/loading.component";
 
@@ -33,7 +33,9 @@ const ShopPage = (props: PropsType) => {
         //     dispatch(getShopData(collectionsMap));
         //     dispatch(isLoadingData({isLoading: false}));
         // });
-        dispatch(getShopDataTC());
+
+        //dispatch(getShopDataTC());
+        dispatch(initSagaLoadShopData({}));
 
     }, [])
 

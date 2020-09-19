@@ -3,17 +3,19 @@ import logger from 'redux-logger';
 import {configureStore} from "@reduxjs/toolkit";
 import {FLUSH, persistStore, REHYDRATE} from 'redux-persist';
 import {PAUSE, PERSIST, PURGE, REGISTER} from "redux-persist/es/constants";
-import thunkMiddleware from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
+import {watchLoadShopData} from "./shop/shop.reducer";
 
-let middleware: Array<any> = [thunkMiddleware];
+export const sagaMiddleware = createSagaMiddleware();
+
+
+let middleware: Array<any> = [sagaMiddleware];
 
 if (process.env.NODE_ENV === 'development') {
     middleware = [...middleware, logger];
 } else {
     middleware = [...middleware];
 }
-
-//export const store = createStore(rootReducers, applyMiddleware(...middleware));
 
 export const store = configureStore({
     reducer: persRed,
@@ -25,3 +27,5 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+
+sagaMiddleware.run(watchLoadShopData);
