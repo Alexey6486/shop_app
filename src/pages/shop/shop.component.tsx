@@ -4,10 +4,9 @@ import {CollectionsOverviewComponent} from "../../components/collections-overvie
 import {Route, RouteComponentProps, withRouter} from 'react-router-dom';
 import {CollectionPage} from "../collection/category.component";
 import {useDispatch, useSelector} from "react-redux";
-import {getShopData, isLoadingData, ShopDataType} from "../../redux/shop/shop.reducer";
-import {convertCollectionsSnapshotToMap, firestore} from "../../firebase/firebase.utils";
+import {getShopDataTC, ShopDataType} from "../../redux/shop/shop.reducer";
 import {AppRootStateType} from "../../redux/root-reducers";
-import { WithSpinner } from "../../components/loading/loading.component";
+import {WithSpinner} from "../../components/loading/loading.component";
 
 type RoutePropsType = {};
 type PropsType = RouteComponentProps<RoutePropsType> & {};
@@ -26,14 +25,15 @@ const ShopPage = (props: PropsType) => {
 
     useEffect(() => {
 
-        const collectionRef = firestore.collection('collections');
-        const unsubscribeFromSnapShot = collectionRef.onSnapshot(async snapshot => {
-            // console.log(snapshot);
-            const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-            // console.log(collectionsMap);
-            dispatch(getShopData(collectionsMap));
-            dispatch(isLoadingData({isLoading: false}));
-        });
+        // const collectionRef = firestore.collection('collections');
+        // const unsubscribeFromSnapShot = collectionRef.onSnapshot(async snapshot => {
+        //     // console.log(snapshot);
+        //     const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+        //     // console.log(collectionsMap);
+        //     dispatch(getShopData(collectionsMap));
+        //     dispatch(isLoadingData({isLoading: false}));
+        // });
+        dispatch(getShopDataTC());
 
     }, [])
 
@@ -41,8 +41,10 @@ const ShopPage = (props: PropsType) => {
         <div className={'shop-page'}>
             <div className={'container'}>
                 <h2 className={'shop-page__title'}>Shop page</h2>
-                <Route exact path={`${match.path}`} render={(props) => <CollectionOverviewWithSpinner isLoading={isLoading} {...props}/>}/>
-                <Route path={`${match.path}/:collectionId`} render={(props) => <CollectionPageWithSpinner isLoading={isLoading} {...props}/>}/>
+                <Route exact path={`${match.path}`}
+                       render={(props) => <CollectionOverviewWithSpinner isLoading={isLoading} {...props}/>}/>
+                <Route path={`${match.path}/:collectionId`}
+                       render={(props) => <CollectionPageWithSpinner isLoading={isLoading} {...props}/>}/>
             </div>
         </div>
     )
