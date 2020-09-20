@@ -43,11 +43,14 @@ const slice = createSlice({
         setUserIsLoggedInAC(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
             state.isLoggedIn = action.payload.isLoggedIn;
         },
+        checkUserSession(state, action: PayloadAction<{}>) {
+            return state;
+        },
     }
 });
 
 export const userReducer = slice.reducer;
 export const {
     setUserIsLoggedInAC, setCurrentUserDataAC, setSignInError, initSagaSignInWithEmail,
-    initSagaSignInWithGoogle,
+    initSagaSignInWithGoogle, checkUserSession,
 } = slice.actions;

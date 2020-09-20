@@ -2,7 +2,6 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-
 const config = {
     apiKey: "AIzaSyBtSyWSL3XSprJEirT0ZGWktsjBNR-2JoE",
     authDomain: "shop-f01e1.firebaseapp.com",
@@ -85,6 +84,16 @@ export const convertCollectionsSnapshotToMap = (collections: any) => {
         acc[collection.title.toLowerCase()] = collection;
         return acc;
     }, {});
+};
+
+// check user session
+export const getCurrentUser = () => {
+    return new Promise((res, rej) => {
+        const unsubscribe = auth.onAuthStateChanged(userAuth => {
+            unsubscribe();
+            res(userAuth);
+        }, rej);
+    })
 };
 
 export default firebase;

@@ -7,13 +7,14 @@ import {HeaderWithRouter} from './components/header/header.component';
 import {Auth} from "./pages/auth/auth.component";
 import {useDispatch} from "react-redux";
 import {CheckoutPage} from "./pages/checkout/checkout.component";
+import { checkUserSession } from './redux/user/user.reducer';
 
 export const App = () => {
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-
+        dispatch(checkUserSession({}));
     }, [])
 
     return (

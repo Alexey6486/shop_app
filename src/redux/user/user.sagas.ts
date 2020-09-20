@@ -1,12 +1,13 @@
 import {call, put, takeLatest} from "redux-saga/effects";
 import {
+    checkUserSession,
     initSagaSignInWithEmail,
     initSagaSignInWithGoogle,
     setCurrentUserDataAC,
     setSignInError,
     setUserIsLoggedInAC,
 } from "./user.reducer";
-import {auth, createUserProfileDocument, googleProvider} from "../../firebase/firebase.utils";
+import {auth, createUserProfileDocument, getCurrentUser, googleProvider} from "../../firebase/firebase.utils";
 
 function* getSnapshotFromUserAuth(userAuth: any) {
     try {
@@ -55,4 +56,19 @@ function* workerSignInWithGoogle() {
 
 export function* watchSignInWithGoogle() {
     yield takeLatest(initSagaSignInWithGoogle, workerSignInWithGoogle);
+}
+
+// check user session
+function* workerCheckUserSession() {
+    try {
+        const userAuth = yield getCurrentUser();
+        if (!userAuth) return;
+        yield getSnapshotFromUserAuth(userAuth);
+    } catch (error) {
+        yield put(setSignInError({error: error.message}));
+    }
+}
+
+export function* watchCheckUserSession() {
+    yield takeLatest(checkUserSession, workerCheckUserSession);
 }
