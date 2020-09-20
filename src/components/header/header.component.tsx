@@ -6,7 +6,7 @@ import {AppRootStateType} from "../../redux/root-reducers";
 import {initSagaSignOut, UserStateType} from "../../redux/user/user.reducer";
 import {CartIcon} from "../cart-icon/cart-icon.component";
 import {CartDropdown} from "../cart-dropdown/cart-dropdown.component";
-import {CartStateType} from "../../redux/cart/cart.reducer";
+import {CartStateType, initSagaClearCart} from "../../redux/cart/cart.reducer";
 import {HeaderContainer, HeaderFrame, LinkContainer, NavContainer} from "./header.styles";
 
 type PropsType = RouteComponentProps & {}
@@ -45,7 +45,6 @@ const Header = (props: PropsType) => {
                     <LinkContainer active={active(currentUrl, '/shop')} to={'/shop'}>
                         Shop
                     </LinkContainer>
-
                     {
                         isLoggedIn
                             ? <LinkContainer as={'div'} onClick={onSignOut}>Sign Out</LinkContainer>

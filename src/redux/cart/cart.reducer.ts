@@ -23,6 +23,12 @@ const slice = createSlice({
     name: 'cartReducer',
     initialState: INITIAL_STATE,
     reducers: {
+        // saga init actions
+        initSagaClearCart(state, action: PayloadAction<{}>) {
+            return state;
+        },
+
+        // actions
         toggleCartPopUp(state, action: PayloadAction<{}>) {
             state.showCartPopUp = !state.showCartPopUp;
         },
@@ -50,8 +56,11 @@ const slice = createSlice({
                 state.cartItems[index].quantity++;
             }
         },
+        clearCart(state, action: PayloadAction<{}>) {
+            state.cartItems = [];
+        },
     }
 });
 
 export const cartReducer = slice.reducer;
-export const {toggleCartPopUp, addItemToCart, removeItemFromCart, changeQuantity} = slice.actions;
+export const {toggleCartPopUp, addItemToCart, removeItemFromCart, changeQuantity, initSagaClearCart, clearCart} = slice.actions;
