@@ -1,26 +1,28 @@
 import React, {FormEvent} from "react";
-import { CustomButton } from "../../custom-button/custom-button.component";
+import {CustomButton} from "../../custom-button/custom-button.component";
 import '../authCommonStyles/auth-in-up.styles.scss';
 import {useFormInputField} from "../authHooks/useFormInputHook";
 import {FormInput} from "../form-input/form-input.component";
-import {signInWithGoogle, auth} from "../../../firebase/firebase.utils";
+import {useDispatch} from "react-redux";
+import {initSagaSignInWithEmail, initSagaSignInWithGoogle} from "../../../redux/user/user.reducer";
 
 export const SignIn = () => {
+
+    const dispatch = useDispatch();
 
     const email = useFormInputField("");
     const password = useFormInputField("");
 
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        try {
-            await auth.signInWithEmailAndPassword(email.value, password.value);
-            email.clear();
-            password.clear();
-        } catch(error) {
-            console.log(error);
-        }
+        dispatch(initSagaSignInWithEmail({email: email.value, password: password.value}));
+        email.clear();
+        password.clear();
     }
+
+    const onSignInWithGoogle = () => {
+        dispatch(initSagaSignInWithGoogle({}));
+    };
 
     return (
         <div className={'authForm'}>
@@ -43,7 +45,7 @@ export const SignIn = () => {
                 </div>
 
             </form>
-            <CustomButton onClick={signInWithGoogle} isGoogle={true}>Sign In With Google</CustomButton>
+            <CustomButton onClick={onSignInWithGoogle} isGoogle={true}>Sign In With Google</CustomButton>
         </div>
     )
 }

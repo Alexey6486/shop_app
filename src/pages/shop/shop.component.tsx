@@ -4,7 +4,7 @@ import {CollectionsOverviewComponent} from "../../components/collections-overvie
 import {Route, RouteComponentProps, withRouter} from 'react-router-dom';
 import {CollectionPage} from "../collection/category.component";
 import {useDispatch, useSelector} from "react-redux";
-import {getShopDataTC, initSagaLoadShopData, ShopDataType} from "../../redux/shop/shop.reducer";
+import {initSagaLoadShopData, ShopDataType} from "../../redux/shop/shop.reducer";
 import {AppRootStateType} from "../../redux/root-reducers";
 import {WithSpinner} from "../../components/loading/loading.component";
 
@@ -24,19 +24,7 @@ const ShopPage = (props: PropsType) => {
     const {match} = props;
 
     useEffect(() => {
-
-        // const collectionRef = firestore.collection('collections');
-        // const unsubscribeFromSnapShot = collectionRef.onSnapshot(async snapshot => {
-        //     // console.log(snapshot);
-        //     const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-        //     // console.log(collectionsMap);
-        //     dispatch(getShopData(collectionsMap));
-        //     dispatch(isLoadingData({isLoading: false}));
-        // });
-
-        //dispatch(getShopDataTC());
         dispatch(initSagaLoadShopData({}));
-
     }, [])
 
     return (
