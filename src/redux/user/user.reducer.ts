@@ -9,7 +9,14 @@ type CurrentUserType = {
     email: string
     id: string
 }
-
+export type AuthDataType = {
+    email: string
+    password: string
+    displayName?: string
+}
+export type AuthPayloadType = {
+    payload: AuthDataType
+}
 type UserDataType = CurrentUserType | null;
 
 export type UserStateType = {
@@ -29,7 +36,7 @@ const slice = createSlice({
     initialState: INITIAL_STATE,
     reducers: {
         // saga init actions
-        initSagaSignInWithEmail(state, action: PayloadAction<{ email: string, password: string }>) {
+        initSagaSignInWithEmail(state, action: PayloadAction<AuthDataType>) {
             return state;
         },
         initSagaSignInWithGoogle(state, action: PayloadAction<{}>) {
@@ -39,6 +46,9 @@ const slice = createSlice({
             return state;
         },
         initSagaSignOut(state, action: PayloadAction<{}>) {
+            return state;
+        },
+        initSagaSignUp(state, action: PayloadAction<AuthDataType>) {
             return state;
         },
 
@@ -52,11 +62,14 @@ const slice = createSlice({
         setUserIsLoggedInAC(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
             state.isLoggedIn = action.payload.isLoggedIn;
         },
+        signUp(state, action: PayloadAction<{ user: any, additionalData: any }>) {
+            return state;
+        },
     }
 });
 
 export const userReducer = slice.reducer;
 export const {
     setUserIsLoggedInAC, setCurrentUserDataAC, setSignInError, initSagaSignInWithEmail,
-    initSagaSignInWithGoogle, initSagaCheckUserSession, initSagaSignOut,
+    initSagaSignInWithGoogle, initSagaCheckUserSession, initSagaSignOut, initSagaSignUp, signUp,
 } = slice.actions;

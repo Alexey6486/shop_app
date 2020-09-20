@@ -21,7 +21,7 @@ export const store = configureStore({
     reducer: persRed,
     middleware: getDefaultMiddleware => getDefaultMiddleware({
         serializableCheck: {
-            ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+            ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, 'userReducer/signUp']
         }
     }).prepend(...middleware),
 });

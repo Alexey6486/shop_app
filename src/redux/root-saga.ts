@@ -1,7 +1,9 @@
 import {all, call} from 'redux-saga/effects';
 import { watchClearCart } from './cart/cart.sagas';
 import {watchLoadShopData} from "./shop/shop.reducer";
-import {watchCheckUserSession, watchSignInWithEmail, watchSignInWithGoogle, watchSignOut} from './user/user.sagas';
+import {watchCheckUserSession,
+    watchSignInAfterSingUp,
+    watchSignInWithEmail, watchSignInWithGoogle, watchSignOut, watchSignUp} from './user/user.sagas';
 
 export function* rootSaga() {
     yield all([
@@ -11,5 +13,7 @@ export function* rootSaga() {
         call(watchCheckUserSession),
         call(watchSignOut),
         call(watchClearCart),
+        call(watchSignUp),
+        call(watchSignInAfterSingUp),
     ]);
 }

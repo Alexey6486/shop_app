@@ -3,9 +3,12 @@ import '../authCommonStyles/auth-in-up.styles.scss';
 import {useFormInputField} from "../authHooks/useFormInputHook";
 import {FormInput} from "../form-input/form-input.component";
 import {CustomButton} from "../../custom-button/custom-button.component";
-import {auth, createUserProfileDocument} from "../../../firebase/firebase.utils";
+import {useDispatch} from "react-redux";
+import { initSagaSignUp } from "../../../redux/user/user.reducer";
 
 export const SignUp = () => {
+
+    const dispatch = useDispatch();
 
     const displayName = useFormInputField("");
     const email = useFormInputField("");
@@ -20,20 +23,12 @@ export const SignUp = () => {
             return;
         }
 
-        try {
-            // createUserWithEmailAndPassword return user auth object
-            const { user } = await auth.createUserWithEmailAndPassword(email.value, password.value)
+        dispatch(initSagaSignUp({email: email.value, password: password.value, displayName: displayName.value}));
 
-            await createUserProfileDocument(user, {displayName: displayName.value})
-
-            displayName.clear();
-            email.clear();
-            password.clear();
-            confirmPassword.clear();
-
-        } catch(error) {
-            console.log('sign up error')
-        }
+        displayName.clear();
+        email.clear();
+        password.clear();
+        confirmPassword.clear();
     }
 
     return (

@@ -1,18 +1,21 @@
 import {call, put, takeLatest} from "redux-saga/effects";
 import {
+    AuthPayloadType,
     initSagaCheckUserSession,
     initSagaSignInWithEmail,
     initSagaSignInWithGoogle,
     initSagaSignOut,
+    initSagaSignUp,
     setCurrentUserDataAC,
     setSignInError,
     setUserIsLoggedInAC,
+    signUp,
 } from "./user.reducer";
 import {auth, createUserProfileDocument, getCurrentUser, googleProvider} from "../../firebase/firebase.utils";
 
-function* getSnapshotFromUserAuth(userAuth: any) {
+function* getSnapshotFromUserAuth(userAuth: any, additionalData: any) {
     try {
-        const userRef = yield call(createUserProfileDocument, userAuth);
+        const userRef = yield call(createUserProfileDocument, userAuth, additionalData);
         const userSnapshot = yield userRef.get();
         yield put(setCurrentUserDataAC({
             currentUser:
@@ -32,10 +35,10 @@ function* getSnapshotFromUserAuth(userAuth: any) {
 }
 
 // sign in with email
-function* workerSignInWithEmail({payload: {email, password}}: any) {
+function* workerSignInWithEmail({payload: {email, password}}: AuthPayloadType) {
     try {
         const {user} = yield auth.signInWithEmailAndPassword(email, password);
-        yield getSnapshotFromUserAuth(user);
+        yield getSnapshotFromUserAuth(user, null);
     } catch (error) {
         yield put(setSignInError({error: error.message}));
     }
@@ -49,7 +52,7 @@ export function* watchSignInWithEmail() {
 function* workerSignInWithGoogle() {
     try {
         const {user} = yield auth.signInWithPopup(googleProvider);
-        yield getSnapshotFromUserAuth(user);
+        yield getSnapshotFromUserAuth(user, null);
     } catch (error) {
         yield put(setSignInError({error: error.message}));
     }
@@ -64,7 +67,7 @@ function* workerCheckUserSession() {
     try {
         const userAuth = yield getCurrentUser();
         if (!userAuth) return;
-        yield getSnapshotFromUserAuth(userAuth);
+        yield getSnapshotFromUserAuth(userAuth, null);
     } catch (error) {
         yield put(setSignInError({error: error.message}));
     }
@@ -87,4 +90,29 @@ function* workerSignOut() {
 
 export function* watchSignOut() {
     yield takeLatest(initSagaSignOut, workerSignOut);
+}
+
+// sign up
+function* workerSignUp({payload: {email, password, displayName}}: AuthPayloadType) {
+    try {
+        const { user } = yield auth.createUserWithEmailAndPassword(email, password);
+        yield put(signUp({user, additionalData: {displayName}}));
+    } catch(error) {
+        yield put(setSignInError({error: error.message}));
+    }
+}
+export function* watchSignUp() {
+    yield takeLatest(initSagaSignUp, workerSignUp);
+}
+
+// listen to signUp action to be fired
+function* workerSignInAfterSingUp({payload: {user, additionalData}}: any) {
+    try {
+        yield getSnapshotFromUserAuth(user, additionalData);
+    } catch(error) {
+        yield put(setSignInError({error: error.message}));
+    }
+}
+export function* watchSignInAfterSingUp() {
+    yield takeLatest(signUp, workerSignInAfterSingUp);
 }
