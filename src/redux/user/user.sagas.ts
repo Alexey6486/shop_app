@@ -1,8 +1,9 @@
 import {call, put, takeLatest} from "redux-saga/effects";
 import {
-    checkUserSession,
+    initSagaCheckUserSession,
     initSagaSignInWithEmail,
     initSagaSignInWithGoogle,
+    initSagaSignOut,
     setCurrentUserDataAC,
     setSignInError,
     setUserIsLoggedInAC,
@@ -70,5 +71,20 @@ function* workerCheckUserSession() {
 }
 
 export function* watchCheckUserSession() {
-    yield takeLatest(checkUserSession, workerCheckUserSession);
+    yield takeLatest(initSagaCheckUserSession, workerCheckUserSession);
+}
+
+// sign out
+function* workerSignOut() {
+    try {
+        yield auth.signOut();
+        yield put(setCurrentUserDataAC({currentUser: null}));
+        yield put(setUserIsLoggedInAC({isLoggedIn: false}));
+    } catch (error) {
+        yield put(setSignInError({error: error.message}));
+    }
+}
+
+export function* watchSignOut() {
+    yield takeLatest(initSagaSignOut, workerSignOut);
 }

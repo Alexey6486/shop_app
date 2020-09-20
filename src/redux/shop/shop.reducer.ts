@@ -34,9 +34,12 @@ const slice = createSlice({
     name: 'shopReducer',
     initialState: INITIAL_STATE,
     reducers: {
+        // saga init actions
         initSagaLoadShopData(state, action: PayloadAction<{}>) {
             return state;
         },
+
+        // actions
         getShopData(state, action: PayloadAction<CollectionsType>) {
             state.collections = action.payload;
         },
@@ -71,10 +74,10 @@ export const getShopDataTC = () => (dispatch: ThunkDispatch<AppRootStateType, {}
 // watchers - takes action (initSagaLoadShopData) to observe, when it fires somewhere in the code,
 // watcher invokes worker (workerLoadShopData)
 
-function fetchData() {
-    const collectionRef = firestore.collection('collections');
-    return collectionRef.get().then(snapshot => convertCollectionsSnapshotToMap(snapshot));
-}
+// function fetchData() {
+//     const collectionRef = firestore.collection('collections');
+//     return collectionRef.get().then(snapshot => convertCollectionsSnapshotToMap(snapshot));
+// }
 
 // after each yield saga checks if there watchLoadShopData fires again
 // if user make action that fires watchLoadShopData and while it is running user fires watchLoadShopData again

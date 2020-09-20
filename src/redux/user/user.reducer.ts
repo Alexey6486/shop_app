@@ -28,12 +28,21 @@ const slice = createSlice({
     name: 'userReducer',
     initialState: INITIAL_STATE,
     reducers: {
+        // saga init actions
         initSagaSignInWithEmail(state, action: PayloadAction<{ email: string, password: string }>) {
             return state;
         },
         initSagaSignInWithGoogle(state, action: PayloadAction<{}>) {
             return state;
         },
+        initSagaCheckUserSession(state, action: PayloadAction<{}>) {
+            return state;
+        },
+        initSagaSignOut(state, action: PayloadAction<{}>) {
+            return state;
+        },
+
+        // actions
         setCurrentUserDataAC(state, action: PayloadAction<{ currentUser: UserDataType }>) {
             state.currentUser = action.payload.currentUser;
         },
@@ -43,14 +52,11 @@ const slice = createSlice({
         setUserIsLoggedInAC(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
             state.isLoggedIn = action.payload.isLoggedIn;
         },
-        checkUserSession(state, action: PayloadAction<{}>) {
-            return state;
-        },
     }
 });
 
 export const userReducer = slice.reducer;
 export const {
     setUserIsLoggedInAC, setCurrentUserDataAC, setSignInError, initSagaSignInWithEmail,
-    initSagaSignInWithGoogle, checkUserSession,
+    initSagaSignInWithGoogle, initSagaCheckUserSession, initSagaSignOut,
 } = slice.actions;
