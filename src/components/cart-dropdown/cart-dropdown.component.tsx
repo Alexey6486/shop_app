@@ -5,6 +5,13 @@ import {AppRootStateType} from "../../redux/root-reducers";
 import {CartStateType, toggleCartPopUp} from "../../redux/cart/cart.reducer";
 import { CartItemComponent } from "../cart-item/cart-item.component";
 import {NavLink} from "react-router-dom";
+import {gql, useMutation} from "@apollo/client";
+
+const TOGGLE_CART_HIDDEN = gql`
+    mutation ToggleCartHidden {
+        toggleCartHidden @client
+    }
+`;
 
 export const CartDropdown = () => {
 
@@ -13,7 +20,9 @@ export const CartDropdown = () => {
     const cartState = useSelector<AppRootStateType, CartStateType>(state => state.cartReducer);
     const {cartItems} = cartState;
 
-    const onClick = () => dispatch(toggleCartPopUp({}));
+    const [toggleCartHidden] = useMutation(TOGGLE_CART_HIDDEN);
+
+    const onClick = () => toggleCartHidden();
 
     const cartItemsMap = cartItems.map(item => {
         const {id} = item;

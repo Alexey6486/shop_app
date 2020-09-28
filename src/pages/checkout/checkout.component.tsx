@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../redux/root-reducers";
 import {CartStateType, changeQuantity, removeItemFromCart} from "../../redux/cart/cart.reducer";
 import { CheckoutItemComponent } from "../../components/checkout-item/checkout-item.component";
+import {gql} from "@apollo/client";
 
 export const CheckoutPage= () => {
 

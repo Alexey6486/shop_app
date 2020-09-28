@@ -6,12 +6,28 @@ import {BrowserRouter} from "react-router-dom";
 import {Provider} from 'react-redux';
 import {persistor, store} from './redux/store';
 import {PersistGate} from "redux-persist/integration/react";
-import {ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import {ApolloClient, ApolloProvider, gql, InMemoryCache, NormalizedCacheObject} from "@apollo/client";
+import {resolvers, typeDefs} from "./graphql/resolvers";
 
-export const client: any = new ApolloClient({
+export const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
     uri: 'https://crwn-clothing.com',
     cache: new InMemoryCache(),
+    resolvers,
+    typeDefs,
+
 });
+
+client.writeQuery({
+    query: gql`
+        query toggleCartHidden {
+              cartHidden
+        }
+      `,
+    data: {
+        cartHidden: true
+    }
+});
+
 
 ReactDOM.render(
     <ApolloProvider client={client}>

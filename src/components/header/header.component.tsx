@@ -8,8 +8,16 @@ import {CartIcon} from "../cart-icon/cart-icon.component";
 import {CartDropdown} from "../cart-dropdown/cart-dropdown.component";
 import {CartStateType, initSagaClearCart} from "../../redux/cart/cart.reducer";
 import {HeaderContainer, HeaderFrame, LinkContainer, NavContainer} from "./header.styles";
+import {gql, useQuery} from "@apollo/client";
+import {client} from "../../index";
 
 type PropsType = RouteComponentProps & {}
+
+const GET_CART_HIDDEN = gql`
+    {
+        cartHidden @client
+    }
+`;
 
 const Header = (props: PropsType) => {
 
@@ -22,6 +30,8 @@ const Header = (props: PropsType) => {
 
     const cartState = useSelector<AppRootStateType, CartStateType>(state => state.cartReducer);
     const {showCartPopUp, cartItems} = cartState;
+
+    const { loading, error, data } = useQuery(GET_CART_HIDDEN);
 
     const currentUrl = history.location.pathname;
 
@@ -52,7 +62,7 @@ const Header = (props: PropsType) => {
                     }
                     <CartIcon inCart={reduceTotalAmountOfItems}/>
                 </NavContainer>
-                {showCartPopUp && <CartDropdown/>}
+                {!data.cartHidden && <CartDropdown/>}
             </HeaderFrame>
         </HeaderContainer>
     )

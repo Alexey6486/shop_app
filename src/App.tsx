@@ -8,6 +8,7 @@ import {Auth} from "./pages/auth/auth.component";
 import {useDispatch} from "react-redux";
 import {CheckoutPage} from "./pages/checkout/checkout.component";
 import {initSagaCheckUserSession} from './redux/user/user.reducer';
+import {gql} from "@apollo/client";
 
 export const App = () => {
 
