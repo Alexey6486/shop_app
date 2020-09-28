@@ -14,19 +14,6 @@ export const client: any = new ApolloClient({
     credentials: 'include',
 });
 
-// client.query({
-//     query: gql`
-//         {
-//             collections {
-//                 title
-//                 items {
-//
-//                 }
-//             }
-//         }
-//     `
-// }).then((res: any) => console.log(res.data.collections));
-
 ReactDOM.render(
     <ApolloProvider client={client}>
         <Provider store={store}>

@@ -40,7 +40,7 @@ export const CollectionsOverviewComponent = () => {
     const { loading, error, data } = useQuery(COLLECTIONS_GRAPHQL);
 
     if (loading) return <LoadingWrapComponent/>;
-    if (error) return <p>Error</p>;
+    if (error) return <p>This page currently is unavailable. Work in progress...</p>;
 
     const shopDataMap = data.collections ? Object.keys(data.collections)
         .map(i => data.collections[i])
