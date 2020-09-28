@@ -11,7 +11,6 @@ import {ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 export const client: any = new ApolloClient({
     uri: 'https://crwn-clothing.com',
     cache: new InMemoryCache(),
-    credentials: 'include',
 });
 
 ReactDOM.render(
