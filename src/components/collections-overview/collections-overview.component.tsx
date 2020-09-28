@@ -4,11 +4,28 @@ import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../redux/root-reducers";
 import {ShopDataType} from "../../redux/shop/shop.reducer";
 import {PreviewCollectionComponent} from "../preview-collection/preview-collection.component";
+import {gql, useQuery} from "@apollo/client";
+import {LoadingWrapComponent} from "../loading/loadingIndicator/loadingIndicator.styles";
+
+const COLLECTIONS_GRAPHQL = gql`
+        {
+            collections {
+                id
+                title
+                items {
+                    id
+                    imageUrl
+                    name
+                    price
+                }
+            }
+        }
+    `;
 
 export const CollectionsOverviewComponent = () => {
 
-    const shopState = useSelector<AppRootStateType, ShopDataType>(state => state.shopReducer);
-    const {collections} = shopState;
+    // const shopState = useSelector<AppRootStateType, ShopDataType>(state => state.shopReducer);
+    // const {collections} = shopState;
 
     // let shopDataArr = [];
     // for (let i in shopState) {
@@ -19,8 +36,14 @@ export const CollectionsOverviewComponent = () => {
     // });
 
     //console.log(Object.keys(shopState).map(i => shopState[i]))
-    const shopDataMap = collections ? Object.keys(collections)
-        .map(i => collections[i])
+
+    const { loading, error, data } = useQuery(COLLECTIONS_GRAPHQL);
+
+    if (loading) return <LoadingWrapComponent/>;
+    if (error) return <p>Error</p>;
+
+    const shopDataMap = data.collections ? Object.keys(data.collections)
+        .map(i => data.collections[i])
         .map(({id, ...otherProps}) => {
             return <PreviewCollectionComponent key={id} {...otherProps}/>
         }) : [];

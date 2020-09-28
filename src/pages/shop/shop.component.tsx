@@ -25,7 +25,7 @@ const ShopPage = (props: PropsType) => {
 
     useEffect(() => {
         dispatch(initSagaLoadShopData({}));
-    }, [])
+    }, [dispatch])
 
     return (
         <div className={'shop-page'}>

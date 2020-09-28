@@ -7,7 +7,7 @@ import {HeaderWithRouter} from './components/header/header.component';
 import {Auth} from "./pages/auth/auth.component";
 import {useDispatch} from "react-redux";
 import {CheckoutPage} from "./pages/checkout/checkout.component";
-import { initSagaCheckUserSession } from './redux/user/user.reducer';
+import {initSagaCheckUserSession} from './redux/user/user.reducer';
 
 export const App = () => {
 
@@ -15,7 +15,7 @@ export const App = () => {
 
     useEffect(() => {
         dispatch(initSagaCheckUserSession({}));
-    }, [])
+    }, [dispatch])
 
     return (
         <div className="App">
