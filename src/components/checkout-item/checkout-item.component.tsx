@@ -3,6 +3,8 @@ import '../../pages/checkout/checkout.styles.scss';
 import {ReactComponent as DeleteIcon} from '../../assets/icons/delete.svg';
 import {ReactComponent as PlusIcon} from '../../assets/icons/plus.svg';
 import {ReactComponent as MinusIcon} from '../../assets/icons/minus.svg';
+import {gql, useMutation, useQuery} from "@apollo/client";
+import {initSagaSignOut} from "../../redux/user/user.reducer";
 
 type PropsType = {
     id: number
@@ -13,14 +15,27 @@ type PropsType = {
     removeItem: (id: number) => void
     changeAmount: (direction: 'inc' | 'dec', id: number) => void
 }
-
+const CHANGE_QUANTITY = gql`
+    mutation ChangeQuantityGraphql($payload: Payload!) {
+        ChangeQuantityGraphql(payload: $payload) @client
+    }
+`;
+const REMOVE_ITEM = gql`
+    mutation RemoveItemFromCart($id: Int!) {
+        RemoveItemFromCart(id: $id) @client
+    }
+`;
 export const CheckoutItemComponent = (props: PropsType) => {
 
     const {price, name, imageUrl, quantity, removeItem, id, changeAmount} = props;
 
-    const onRemoveHandler = () => removeItem(id);
+    const [RemoveItemFromCart] = useMutation(REMOVE_ITEM);
+    const onRemoveHandler = () => RemoveItemFromCart({variables: {id}});
+    // const onRemoveHandler = () => removeItem(id);
 
-    const onChangeAmountHandler = (direction: 'inc' | 'dec') => changeAmount(direction, id);
+    const [ChangeQuantityGraphql] = useMutation(CHANGE_QUANTITY);
+    const onChangeAmountHandler = (direction: 'inc' | 'dec') => ChangeQuantityGraphql({variables: {payload: {direction, id}}});
+    //const onChangeAmountHandler = (direction: 'inc' | 'dec') => changeAmount(direction, id);
 
     const disabledSvg = quantity === 1 ? 'svg-wrap disabled' : 'svg-wrap';
 

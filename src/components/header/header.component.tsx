@@ -13,11 +13,13 @@ import {client} from "../../index";
 
 type PropsType = RouteComponentProps & {}
 
-const GET_CART_HIDDEN = gql`
+const GET_CART_DATA = gql`
     {
         cartHidden @client
+        cartItems @client
     }
 `;
+
 
 const Header = (props: PropsType) => {
 
@@ -28,20 +30,23 @@ const Header = (props: PropsType) => {
     const authState = useSelector<AppRootStateType, UserStateType>(state => state.userReducer);
     const {isLoggedIn} = authState;
 
-    const cartState = useSelector<AppRootStateType, CartStateType>(state => state.cartReducer);
-    const {showCartPopUp, cartItems} = cartState;
+    // const cartState = useSelector<AppRootStateType, CartStateType>(state => state.cartReducer);
+    // const {showCartPopUp, cartItems} = cartState;
 
-    const { loading, error, data } = useQuery(GET_CART_HIDDEN);
+    const { loading, error, data } = useQuery(GET_CART_DATA);
 
     const currentUrl = history.location.pathname;
 
     const onSignOut = () => dispatch(initSagaSignOut({}));
 
+    const cartItems = data['cartItems'].length ? data['cartItems'] : [];
+
     const reduceTotalAmountOfItems = useMemo(() => {
-        return cartItems.reduce((acc, item) => {
+        return cartItems.reduce((acc: any, item: any) => {
             return acc + item.quantity;
         }, 0);
     }, [cartItems]);
+
 
     const active = (curUrl: string, linkUrl: string) => curUrl === linkUrl ? 'true' : 'false';
 

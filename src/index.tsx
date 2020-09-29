@@ -19,12 +19,14 @@ export const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 
 client.writeQuery({
     query: gql`
-        query toggleCartHidden {
+        query {
               cartHidden
+              cartItems
         }
       `,
     data: {
-        cartHidden: true
+        cartHidden: true,
+        cartItems: [],
     }
 });
 

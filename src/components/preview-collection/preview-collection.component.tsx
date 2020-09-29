@@ -4,6 +4,7 @@ import {CollectionItem} from "../collection-item/collection-item.component";
 import { useDispatch } from "react-redux";
 import { addItemToCart } from "../../redux/cart/cart.reducer";
 import {SectionItemType} from "../../redux/shop/shop.reducer";
+import {gql, useMutation, useQuery} from "@apollo/client";
 
 type PropsType = {
     title: string
@@ -11,18 +12,27 @@ type PropsType = {
     routeName?: string
 }
 
+const ADD_ITEM_TO_CART = gql`
+    mutation AddItemToCartGraphql($item: Item!) {
+        AddItemToCartGraphql(item: $item) @client
+    }
+`;
+
 export const PreviewCollectionComponent = (props: PropsType) => {
 
     const dispatch = useDispatch();
 
     const {title, items} = props;
 
+    const [AddItemToCartGraphql] = useMutation(ADD_ITEM_TO_CART);
+
     const itemsMap = items
         .filter((f, idx) => idx < 4)
         .map(i => {
 
             const onAddItem = () => {
-                dispatch(addItemToCart(i));
+                AddItemToCartGraphql({ variables: { item: i } })
+                //dispatch(addItemToCart(i));
             };
 
             return (

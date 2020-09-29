@@ -4,26 +4,36 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../redux/root-reducers";
 import {CartStateType, changeQuantity, removeItemFromCart} from "../../redux/cart/cart.reducer";
 import { CheckoutItemComponent } from "../../components/checkout-item/checkout-item.component";
-import {gql} from "@apollo/client";
+import {gql, useQuery} from "@apollo/client";
+
+const GET_CART_ITEMS = gql`
+    {
+        cartItems @client
+    }
+`;
 
 export const CheckoutPage= () => {
 
     const dispatch = useDispatch();
 
-    const cartState = useSelector<AppRootStateType, CartStateType>(state => state.cartReducer);
-    const {cartItems} = cartState;
+    const { loading, error, data } = useQuery(GET_CART_ITEMS);
+
+    const cartItems = data['cartItems'].length ? data['cartItems'] : [];
+
+    // const cartState = useSelector<AppRootStateType, CartStateType>(state => state.cartReducer);
+    // const {cartItems} = cartState;
 
     const removeItem = useCallback((id: number) => dispatch(removeItemFromCart({id})), [dispatch]);
 
     const changeAmount = useCallback((direction: 'inc' | 'dec', id: number) => dispatch(changeQuantity({direction, id})), [dispatch]);
 
     const reduceTotalPriceOfItems = useMemo(() => {
-        return cartItems.reduce((acc, item) => {
+        return cartItems.reduce((acc: any, item: any) => {
             return acc + (item.quantity * item.price);
         }, 0);
     }, [cartItems]);
 
-    const cartItemsMap = cartItems.map(item => {
+    const cartItemsMap = cartItems.map((item: any) => {
         const {id} = item;
         return <CheckoutItemComponent key={id} {...item} removeItem={removeItem} changeAmount={changeAmount}/>;
     });

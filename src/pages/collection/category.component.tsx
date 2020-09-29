@@ -6,7 +6,7 @@ import {AppRootStateType} from "../../redux/root-reducers";
 import {ShopDataType} from "../../redux/shop/shop.reducer";
 import {addItemToCart} from "../../redux/cart/cart.reducer";
 import {CollectionItem} from "../../components/collection-item/collection-item.component";
-import {gql, useQuery} from "@apollo/client";
+import {gql, useMutation, useQuery} from "@apollo/client";
 import {LoadingWrapComponent} from "../../components/loading/loadingIndicator/loadingIndicator.styles";
 
 type RoutePropsType = {
@@ -29,6 +29,11 @@ const COLLECTIONS_ITEMS_GRAPHQL = gql`
             }
         }
     `;
+const ADD_ITEM_TO_CART = gql`
+    mutation AddItemToCartGraphql($item: Item!) {
+        AddItemToCartGraphql(item: $item) @client
+    }
+`;
 
 export const CollectionPage = (props: PropsType) => {
 
@@ -43,9 +48,8 @@ export const CollectionPage = (props: PropsType) => {
 
     //const selectCollection = shopState.find(collection => collection.id === COLLECTIONS_ID_MAP[match.params.collectionId]);
 
-    const { loading, error, data } = useQuery(COLLECTIONS_ITEMS_GRAPHQL, {
-        variables: { title: match.params.collectionId },
-    });
+    const { loading, error, data } = useQuery(COLLECTIONS_ITEMS_GRAPHQL, {variables: { title: match.params.collectionId }});
+    const [AddItemToCartGraphql] = useMutation(ADD_ITEM_TO_CART);
 
     if (loading) return <LoadingWrapComponent/>;
     if (error) return <p>This page currently is unavailable. Work in progress...</p>;
@@ -54,7 +58,10 @@ export const CollectionPage = (props: PropsType) => {
     const collectionItems = data ? data['getCollectionsByTitle'].items : [];
 
     const itemsMap = collectionItems ? collectionItems.map((i: any) => {
-            const onAddItem = () => dispatch(addItemToCart(i));
+
+            const onAddItem = () => AddItemToCartGraphql({variables: { item: i }});
+            //const onAddItem = () => dispatch(addItemToCart(i));
+
             return <CollectionItem key={i.id} {...i} onAddItem={onAddItem}/>
         }) : null;
 
