@@ -1,14 +1,15 @@
-import React, {useEffect} from 'react';
+import React, {lazy, Suspense, useEffect} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import './App.css';
-import {ShopPageWithRouter} from "./pages/shop/shop.component";
-import {Homepage} from "./pages/homepage/homepage";
 import {HeaderWithRouter} from './components/header/header.component';
-import {Auth} from "./pages/auth/auth.component";
 import {useDispatch} from "react-redux";
-import {CheckoutPage} from "./pages/checkout/checkout.component";
 import {initSagaCheckUserSession} from './redux/user/user.reducer';
-import {gql} from "@apollo/client";
+import {LoadingIndicator} from "./components/loading/loadingIndicator/loadingIndicator.component";
+
+const Homepage = lazy(() => import('./pages/homepage/homepage'));
+const Shop = lazy(() => import('./pages/shop/shop.component'));
+const Authentication = lazy(() => import('./pages/auth/auth.component'));
+const Checkout = lazy(() => import('./pages/checkout/checkout.component'));
 
 export const App = () => {
 
@@ -22,10 +23,12 @@ export const App = () => {
         <div className="App">
             <HeaderWithRouter/>
             <Switch>
-                <Route exact path={'/'} component={Homepage}/>
-                <Route path={'/shop'} component={ShopPageWithRouter}/>
-                <Route exact path={'/auth'} component={Auth}/>
-                <Route exact path={'/checkout'} component={CheckoutPage}/>
+                <Suspense fallback={<LoadingIndicator/>}>
+                    <Route exact path={'/'} component={Homepage}/>
+                    <Route path={'/shop'} component={Shop}/>
+                    <Route exact path={'/auth'} component={Authentication}/>
+                    <Route exact path={'/checkout'} component={Checkout}/>
+                </Suspense>
             </Switch>
         </div>
     );

@@ -7,7 +7,7 @@ import {AppRootStateType} from "../../redux/root-reducers";
 import {UserStateType} from "../../redux/user/user.reducer";
 import { Redirect } from "react-router-dom";
 
-export const Auth = () => {
+const Auth = () => {
 
     const authState = useSelector<AppRootStateType, UserStateType>(state => state.userReducer);
     const {isLoggedIn} = authState;
@@ -25,3 +25,5 @@ export const Auth = () => {
         </div>
     )
 }
+
+export default Auth;

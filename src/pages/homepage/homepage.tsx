@@ -2,7 +2,7 @@ import React from "react";
 import './homepage.style.scss';
 import {Directory} from "../../components/directory/directory.component";
 
-export const Homepage = () => {
+const Homepage = () => {
     return (
         <div className={'homepage'}>
             <div className={'container'}>
@@ -11,3 +11,4 @@ export const Homepage = () => {
         </div>
     );
 }
+export default Homepage;

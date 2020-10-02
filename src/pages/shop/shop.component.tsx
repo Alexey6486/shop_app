@@ -39,5 +39,5 @@ const ShopPage = (props: PropsType) => {
         </div>
     )
 };
-
-export const ShopPageWithRouter = withRouter(ShopPage);
+const ShopPageWithRouter = withRouter(ShopPage);
+export default ShopPageWithRouter;

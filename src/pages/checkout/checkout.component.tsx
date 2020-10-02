@@ -12,7 +12,7 @@ const GET_CART_ITEMS = gql`
     }
 `;
 
-export const CheckoutPage= () => {
+const CheckoutPage= () => {
 
     const dispatch = useDispatch();
 
@@ -71,3 +71,5 @@ export const CheckoutPage= () => {
         </div>
     )
 }
+
+export default CheckoutPage;
